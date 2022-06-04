@@ -1,0 +1,35 @@
+﻿@model RoleModel
+@{
+    Layout = "~/Views/Shared/LayoutHome.cshtml";
+}
+
+@section Body{
+    <form method="post">
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label class="control-label">User Name</label>
+                    <input type="text" class="form-control" asp-for="Name" />
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <input type="submit" value="Save" class=" btn btn-primary" asp-action="SaveRole" />
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+
+
+
+}

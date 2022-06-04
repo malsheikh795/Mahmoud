@@ -1,0 +1,158 @@
+﻿@model vmCategory
+@using BooksStoreTask.Data
+@{
+    Layout = "~/Views/Shared/layoutHome.cshtml";
+}
+
+@section head{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".EditThis").click(function () {
+                var id = $(this).parent().parent().find("._id").text();
+                $("#saveBtn").hide()
+                $("#updateBtn").show()
+                $.ajax({
+                    type: 'get',
+                    url: '/BooksStoreTask/Category/GetById?id=' + id,
+                    success: function (data) {
+                        debugger;
+
+                        $("#txtName").val(data.name)
+                        $("#txtId").val(data.id)
+                        $("#txtCategorycode").val(data.categoryCode)
+                    },
+                    error: function (error) {
+                        alert("error")
+                    }
+                })
+
+            })
+
+            $("#NewCategory").click(function () {
+                $("#saveBtn").show()
+                $("#updateBtn").hide()
+
+                $("#txtName").val(" ");
+                $("#txtId").val(" ");
+                $("#txtCategorycode").val(" ");
+
+                })
+        })
+
+    </script>
+
+
+}
+
+
+@section body{
+
+    <form method="post">
+
+        <!--------------->
+        <div class="row">
+            <div class="col-lg-3 col-lg-offset-1">
+                <input type="button" class="btn btn-primary" data-target="#CatePop" data-toggle="modal" id="NewCategory" value="NewCategory" />
+            </div>
+        </div>
+        <!----------------------------------------------------------------->
+
+
+
+        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="CatePop">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Book Adjustment</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span>Category Code</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input id="txtCategorycode" type="text" class="form-control" asp-for="category.CategoryCode" />
+                                <input id="txtId" type="hidden" asp-for="category.Id" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <span>Category Name</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input id="txtName" type="text" class="form-control" asp-for="category.Name" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <div class="row">
+
+                            <div class="col-lg-2">
+                                <input id="saveBtn" type="submit" class="btn btn-primary"  asp-action="Save" value="Save" />
+                            </div>
+
+                            <div class="col-lg-2">
+                                <input id="updateBtn" type="submit" class="btn btn-primary"  asp-action="UpDate" value="UpDate " />
+                            </div>
+
+                            <div class="col-lg-2">
+                                <input type="button" class="btn btn-danger" value="Close" data-dismiss="modal" />
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Caregory Name</th>
+                            <th>Caregory Code</th>
+                            <th colspan="2">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Category catg in Model.LiC)
+                        {
+                            <tr>
+                                <td class="_id">@catg.Id</td>
+
+                                <td>@catg.Name</td>
+                                <td>@catg.CategoryCode</td>
+                                <td><a class="EditThis" data-target="#CatePop" data-toggle="modal">Edit</a></td>
+                                <td><a asp-action="Delete" asp-route-id="@catg.Id">Delete</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+}

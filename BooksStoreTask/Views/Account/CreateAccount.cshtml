@@ -1,0 +1,63 @@
+﻿@model AccountVM
+@{
+    Layout = "~/Views/Shared/layoutHome.cshtml";
+}
+
+@section body{ 
+    <form method="post">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Name</label>
+                        <input type="text" class="form-control" asp-for="accountModel.Name" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <input type="text" class="form-control" asp-for="accountModel.Email" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Password</label>
+                        <input type="password" class="form-control" asp-for="accountModel.Password" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Confirm Password</label>
+                        <input type="password" class="form-control" asp-for="accountModel.ConfirmPassword" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="control-label">Choose Role</label>
+                        <select type="List" class="form-control" asp-items='new SelectList(Model.LiRole,"Id","Name")'asp-for="accountModel.RoleId" ></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <input type="submit" value="Create Account" class="btn btn-primary" asp-action="CreateAccount" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}

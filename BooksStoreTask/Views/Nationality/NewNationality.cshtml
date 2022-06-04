@@ -1,0 +1,58 @@
+﻿@model vmNationality
+@using BooksStoreTask.Data
+@{
+    ViewData["Title"] = "NewCategory";
+    Layout = "~/Views/Shared/layoutHome.cshtml";
+}
+
+
+
+@section body{
+
+    <form method="post">
+        <div class="row">
+            <div class="col-lg-1">
+                <span>Nationality</span>
+            </div>
+
+            <div class="col-lg-3">
+                <input type="text" class="form-control" asp-for="nationality.NationalityName" />
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <input type="submit" class="btn btn-primary" asp-action="Save" value="Save" />
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Caregory Name</th>
+                            <th colspan="2">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Nationality national in Model.LiN)
+                        {
+                            <tr>
+                                <td>@national.Id</td>
+
+                                <td>@national.NationalityName</td>
+                                <td><a asp-action="Edit" asp-route-id="@national.Id">Edit</a></td>
+                                <td><a asp-action="Delete" asp-route-id="@national.Id">Delete</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+}

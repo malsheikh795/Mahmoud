@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using BooksStoreTask.Data
+@inject SignInManager<ApplicationUser> signInManager
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="~/css/StyleSheetMenu.css" rel="stylesheet" type="text/css" />
+    @*<link href="~/css/StyleSheet.css" rel="stylesheet" type="text/css" />*@
+    <link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
+
+    @RenderSection("head", false)
+
+</head>
+
+
+
+<body>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Navigation -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" asp-controller="DashBoard" asp-action="Index">Book Management</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            
+                            <li>
+                                <a asp-controller="Category" asp-action="Index">Category</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Author" asp-action="Index">Author</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Book" asp-action="Index">Book</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Nationality" asp-action="Index">Nationality</a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                            <li>
+                                <a asp-controller="Account" asp-action="Index">CreateAccount</a>
+                            </li>
+                            <li>
+                                <a asp-controller="Account" asp-action="NewRole">New Role</a>
+                            </li>
+                                }
+                            
+
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li style="margin-top: 15px;">
+                                <span>@User.Identity.Name</span>
+                            </li>
+                            <li>
+                                <a asp-action="Logout" asp-controller="Account">
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /.navbar-collapse -->
+
+                </div>
+                <!-- /.container -->
+            </nav>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-12">
+                @RenderSection("body")
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

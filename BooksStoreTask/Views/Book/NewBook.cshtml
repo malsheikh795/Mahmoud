@@ -1,0 +1,282 @@
+﻿@model vmBook
+@using BooksStoreTask.Data
+@{
+    ViewData["Title"] = "NewBook";
+    Layout = "~/Views/Shared/layoutHome.cshtml";
+}
+
+<h1>NewBook</h1>
+@section head{
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $(".EditThis").click(function () {
+                var bok_id = $(this).parent().parent().find("._id").text();
+                $("#saveBtn").hide()
+                $("#updateBtn").show()
+                $.ajax({
+                    type: 'get',
+                    url: '/BooksStoreTask/Book/GetById?id=' + bok_id,
+                    success: function (data) {
+                        debugger;
+
+                        $("#txtName").val(data.name)
+                        $("#txtId").val(data.id)
+                        $("#txtYear").val(data.year)
+                        $("#txtPrice").val(data.price)
+                        $("#txtStock").val(data.stock)
+                    },
+                    error: function (err) {
+                        alert("err")
+                    }
+                })
+
+            })
+
+            $("#NewBook").click(function () {
+                $("#saveBtn").show()
+                $("#updateBtn").hide()
+
+                $("#txtId").val(" ");
+                $("#txtName").val(" ");
+                $("#txtYear").val(" ");
+                $("#txtPrice").val(" ");
+                $("#txtStock").val(" ");
+
+                })
+        })
+
+    </script>
+
+
+}
+
+
+@section body{
+
+    <form method="post" enctype="multipart/form-data">
+
+
+        <div class="modal fade" data-keyboard="false" data-backdrop="static" id="BookPop">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Book Adjustment</h4>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Book Title</label>
+                                    <input id="txtName" type="text" class="form-control" asp-for="book.Name" />
+                                    <input id="txtId" type="hidden" asp-for="book.Id" />
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="row">
+            <div class="col-lg-offset-1 col-lg-2">
+                <span>Book Title</span>
+            </div>
+            <div class="col-lg-7">
+                <input id="txtName" type="text" class="form-control" asp-for="book.Name" />
+                <input id="txtId" type="hidden" asp-for="book.Id" />
+            </div>
+        </div>*@
+
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Year</label>
+                                    <input id="txtYear" type="date" class="form-control" asp-for="book.Year" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<div class="row">
+            <div class="col-lg-offset-1 col-lg-2">
+                <span>Year</span>
+            </div>
+            <div class="col-lg-7">
+                <input id="txtYear" type="date" class="form-control" asp-for="book.Year" />
+            </div>
+        </div>*@
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Price</label>
+                                    <input id="txtPrice" type="text" class="form-control" asp-for="book.Price" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<div class="row">
+            <div class="col-lg-offset-1 col-lg-2">
+                <span>Price</span>
+            </div>
+            <div class="col-lg-7">
+                <input id="txtPrice" type="text" class="form-control" asp-for="book.Price" />
+            </div>
+        </div>*@
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Category</label>
+                                    <select class="form-control" asp-items='new SelectList(Model.LiC,"Id","Name")' asp-for="book.categoryId"></select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<div class="row">
+            <div class="col-lg-offset-1 col-lg-2">
+                <span>Category</span>
+            </div>
+            <div class="col-lg-7">
+                <select class="form-control" asp-items='new SelectList(Model.LiC,"Id","Name")' asp-for="book.categoryId"></select>
+            </div>
+        </div>*@
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Author</label>
+                                    <select class="form-control" asp-items='new SelectList(Model.LiA,"Id","FirstName")' asp-for="book.authorId"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="row">
+            <div class="col-lg-offset-1 col-lg-2">
+                <span>Author</span>
+            </div>
+            <div class="col-lg-7">
+                <select class="form-control" asp-items='new SelectList(Model.LiA,"Id","FirstName")' asp-for="book.authorId"></select>
+            </div>
+        </div>*@
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Stock</label>
+                                    <input id="txtStock" type="text" class="form-control" asp-for="book.stock" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<div class="row">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <span>Stock</span>
+                            </div>
+                            <div class="col-lg-7">
+                                <input id="txtStock" type="text" class="form-control" asp-for="book.stock" />
+                            </div>
+                        </div>*@
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label class="control-label">Book Cover</label>
+                                    <input type="file" asp-for="book.Photo" id="fu1" style="display:none" />
+                                    <label style="margin-left: 10px;" class="btn btn-primary" for="fu1">UpLoud</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<div class="row">
+                            <div class="col-lg-offset-1 col-lg-2">
+                                <span style="padding-right: 10px;">Book Cover</span>
+                            </div>
+                            <div class="col-lg-3">
+                                <input type="file" asp-for="book.Photo" id="fu1" style="display:none" />
+                                <label class="btn btn-primary" for="fu1">UpLoud</label>
+                            </div>
+
+                        </div>*@
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <div class="row">
+                   
+                                <div class="col-lg-2 col-lg-offset-7">
+                                    <input id="saveBtn" type="submit" class="btn btn-primary" asp-controller="Book" asp-action="Save" value="Save" />
+                                </div>
+
+                                <div class="col-lg-2 col-lg-offset-7">
+                                    <input id="updateBtn" type="submit" class="btn btn-primary" asp-controller="Book" asp-action="UpDate" value="UpDate " />
+                                </div>
+                   
+                                <div class="col-lg-2">
+                                    <input type="button" class="btn btn-danger" value="Close" data-dismiss="modal" />
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-lg-offset-1">
+                <input type="button" class="btn btn-primary" data-target="#BookPop" data-toggle="modal" id="NewBook" value="New Book" />
+            </div>
+        </div>
+
+        <!---------------------------------------------------------------------------------------------------->
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Book Title</th>
+                            <th>Cover</th>
+                            <th>Year</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Stock</th>
+                            <th colspan="2">Actions</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Book bok in Model.LiB)
+                        {
+                            <tr>
+                                <td class="_id">@bok.Id</td>
+                                <td>@bok.Name</td>
+                                <td>
+                                    <img style="width:100px; height:100px" src="@bok.PhotoPath" />
+                                </td>
+                                <td>@bok.Year</td>
+                                <td>@bok.Price</td>
+                                <td>@bok.category.Name</td>
+                                <td>@bok.author.FirstName</td>
+                                <td>@bok.stock</td>
+                                <td><a class="EditThis" data-target="#BookPop" data-toggle="modal" >Edit</a></td>
+                                <td><a asp-action="Delete" asp-route-id="@bok.Id">Delete</a></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </form>
+}
